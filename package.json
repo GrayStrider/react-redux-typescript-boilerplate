@@ -64,6 +64,7 @@
     "webpack-dev-server": "^3.1.14"
   },
   "dependencies": {
+    "@ovotech/async-reactor-ts": "^0.2.0",
     "chance": "^1.0.18",
     "classnames": "^2.2.6",
     "cuid": "^2.1.6",
