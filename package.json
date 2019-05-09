@@ -73,6 +73,7 @@
     "lodash": "^4.17.11",
     "prop-types": "latest",
     "react": "^16.8.1",
+    "react-async": "^6.2.0",
     "react-custom-scrollbars": "^4.2.1",
     "react-dom": "^16.8.1",
     "react-onclickoutside": "^6.8.0",
