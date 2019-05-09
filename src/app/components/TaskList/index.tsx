@@ -9,6 +9,7 @@ import { Loader } from 'semantic-ui-react';
 import { AsyncReactor } from '@ovotech/async-reactor-ts';
 import { Aigle } from 'aigle';
 import { useAsync } from 'react-async';
+import { any } from 'prop-types';
 
 const _ = require('lodash');
 
@@ -20,24 +21,20 @@ function TaskList(props) {
   const { filteredTasks } = props;
 
   const asyncfn = async () => {
-    console.time('Slept for');
-    await sleep(3000);
-    console.timeEnd('Slept for');
-    return JSON.stringify(
-      filteredTasks
-    );
+    // console.time('Slept for');
+    // await sleep(3000);
+    // console.timeEnd('Slept for');
+    return await map(filteredTasks,
+      (task) => <Task taskID={task.id} key={task.id}/>)
   }
 
-  const MyComponent = () => {
+  const MyComponent = (): any => {
     const { data, error, isLoading } = useAsync({ promiseFn: asyncfn})
     if (isLoading) return "Loading..."
     if (error) return `Something went wrong: ${error.message}`
     if (data)
       return (
-        <div>
-          <strong>Loaded some data:</strong>
-          <pre>{JSON.stringify(data, null, 2)}</pre>
-        </div>
+        <>{data}</>
       )
     return null
   }
@@ -45,10 +42,10 @@ function TaskList(props) {
   const asyncWrapper = (
     <AsyncReactor
       loader={async () => {
-        console.time('Slept for');
-        await sleep(3000);
-        console.timeEnd('Slept for');
-        return JSON.stringify(
+        // console.time('Slept for');
+        // await sleep(3000);
+        // console.timeEnd('Slept for');
+        return await JSON.stringify(
           filteredTasks
         );
       }}>
@@ -80,7 +77,6 @@ function TaskList(props) {
     <Wrapper>
       <Loader active={false}/>
       <Scrollbar style={{ height: '100%' }} autoHide>
-        // @ts-ignore
         <MyComponent/>
       </Scrollbar>
     </Wrapper>
