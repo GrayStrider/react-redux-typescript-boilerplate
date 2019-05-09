@@ -21,14 +21,11 @@ function TaskList(props) {
   const { filteredTasks } = props;
 
   const asyncfn = async () => {
-    // console.time('Slept for');
-    // await sleep(3000);
-    // console.timeEnd('Slept for');
     return await map(filteredTasks,
       (task) => <Task taskID={task.id} key={task.id}/>)
   }
-
-  const MyComponent = (): any => {
+  // memo doesn't seem to help
+  const MyComponent = React.memo((): any => {
     const { data, error, isLoading } = useAsync({ promiseFn: asyncfn})
     if (isLoading) return "Loading..."
     if (error) return `Something went wrong: ${error.message}`
@@ -37,41 +34,13 @@ function TaskList(props) {
         <>{data}</>
       )
     return null
-  }
-
-  const asyncWrapper = (
-    <AsyncReactor
-      loader={async () => {
-        // console.time('Slept for');
-        // await sleep(3000);
-        // console.timeEnd('Slept for');
-        return await JSON.stringify(
-          filteredTasks
-        );
-      }}>
-      {({ loading, result }) => {
-        if (loading) {
-          return <div>Loading...</div>;
-        }
-
-        return <div>{result}</div>;
-      }}
-    </AsyncReactor>
-  );
+  })
   const listWrapper = <>
     {
       map(filteredTasks,
         (task) => <Task taskID={task.id} key={task.id}/>)
     }
   </>;
-  const array = [1, 2, 3];
-  // @ts-ignore
-  const asyncMap = () => Aigle.map(array, n => Aigle.delay(10, n * 2)).sum()
-    .then(value => {
-      console.log(value); // 12
-    });
-
-
 
   return (
     <Wrapper>
